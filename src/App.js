@@ -1,34 +1,46 @@
 import React from 'react';
+import { Container, Row, Col } from 'reactstrap';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Content from './components/Content';
 import SideBar from './components/SideBar';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 class App extends React.Component {
   state = {
-    country: "Armenia"
+    isVisible: false
   };
 
   constructor(props) {
     super(props);
-    this.handleOnChangeCountry = this.handleOnChangeCountry.bind(this);
+    this.handleOnToggle = this.handleOnToggle.bind(this);
   }
 
-  handleOnChangeCountry() {
-    this.setState({country: "USA"})
+  handleOnToggle() {
+    this.setState({ isVisible: !this.state.isVisible })
   }
 
   render() {
     return (
-        <>
-          <Header/>
-          <SideBar/>
-          <Content/>
-          <Footer/>
-        </>
+      <Container fluid>
+        <Header onToggleHandler={this.handleOnToggle} />
+        <Row>
+          {
+            this.state.isVisible && (
+              <Col md="3">
+                <SideBar />
+              </Col>
+            )
+          }
+          <Col md={this.state.isVisible ? 9 : 12}>
+            <Content />
+          </Col>
+        </Row>
+        <Footer />
+      </Container>
     );
   }
 }

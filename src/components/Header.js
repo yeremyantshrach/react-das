@@ -1,9 +1,16 @@
 import React from 'react';
+import { Button } from "reactstrap";
 
-function Header() {
+function Header(props) {
 	return (
 		<header>
-			Header
+			<Button
+				onClick={props.onToggleHandler}
+				type="button"
+				color="primary"
+			>
+				burger
+			</Button>
 		</header>
 	)
 }

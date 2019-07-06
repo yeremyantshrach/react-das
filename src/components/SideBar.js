@@ -2,7 +2,7 @@ import React from 'react';
 
 function SideBar() {
 	return (
-		<aside>
+		<aside style={{ background: "red" }}>
 			Side bar
 		</aside>
 	)
