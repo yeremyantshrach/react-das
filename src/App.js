@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import {
+  BrowserRouter as Router
+} from 'react-router-dom';
 
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Content from './components/Content';
-import SideBar from './components/SideBar';
+import Web from './versions/Web';
+
+import withMobileSize from './withMobileSize';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -25,24 +26,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <Container fluid>
-        <Header onToggleHandler={this.handleOnToggle} />
-        <Row>
-          {
-            this.state.isVisible && (
-              <Col md="3">
-                <SideBar />
-              </Col>
-            )
-          }
-          <Col md={this.state.isVisible ? 9 : 12}>
-            <Content />
-          </Col>
-        </Row>
-        <Footer />
-      </Container>
+      <Router>
+        {this.props.width >= 992 && <Web handleOnToggle={this.handleOnToggle} isVisible={this.state.isVisible} />}
+      </Router>
     );
   }
 }
 
-export default App;
+export default withMobileSize(App);
