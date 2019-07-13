@@ -15,6 +15,8 @@ import Footer from '../components/Footer';
 import Content from '../components/Content';
 import SideBar from '../components/SideBar';
 
+import './Web.css';
+
 function Web(props) {
     return (
         <Container fluid>

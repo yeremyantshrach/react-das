@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 
 import Web from './versions/Web';
+import Register from './pages/Register';
 
 import withMobileSize from './withMobileSize';
 
@@ -25,11 +26,20 @@ class App extends React.Component {
   }
 
   render() {
-    return (
+    return localStorage.getItem('user') ? (
       <Router>
-        {this.props.width >= 992 && <Web handleOnToggle={this.handleOnToggle} isVisible={this.state.isVisible} />}
+        {
+          this.props.width >= 992 && (
+            <Web
+              handleOnToggle={this.handleOnToggle}
+              isVisible={this.state.isVisible}
+            />
+          )
+        }
       </Router>
-    );
+    ) : (
+        <Register />
+      )
   }
 }
 
