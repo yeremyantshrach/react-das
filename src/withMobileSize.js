@@ -26,6 +26,7 @@ function withMobileSize(Component) {
                 height: window.innerHeight
             })
         }
+
         render() {
             return (
                 <Component {...this.props} {...this.state} />

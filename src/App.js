@@ -1,9 +1,18 @@
 import React from 'react';
 import {
-  BrowserRouter as Router
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
 } from 'react-router-dom';
 
 import Web from './versions/Web';
+
+import About from './pages/About';
+import Home from './pages/Home';
+import Contact from './pages/Contact';
+
+import Login from './pages/Login';
 import Register from './pages/Register';
 
 import withMobileSize from './withMobileSize';
@@ -33,12 +42,37 @@ class App extends React.Component {
             <Web
               handleOnToggle={this.handleOnToggle}
               isVisible={this.state.isVisible}
-            />
+            >
+              <Switch>
+                <Route exact component={Home} path="/" />
+                <Route component={About} path="/about" />
+                <Route component={Contact} path="/contact" />
+                <Redirect from="*" to="/" />
+              </Switch>
+            </Web>
+          )
+        }
+        {
+          this.props.width < 992 && this.props.width >= 515 && (
+            <div>
+              tablet version
+            </div>
           )
         }
       </Router>
     ) : (
-        <Register />
+        <Router>
+          <Web
+            handleOnToggle={this.handleOnToggle}
+            isVisible={this.state.isVisible}
+          >
+            <Switch>
+              <Route exact component={Login} path="/login" />
+              <Route component={Register} path="/register" />
+              <Redirect from="*" to="/login" />
+            </Switch>
+          </Web>
+        </Router>
       )
   }
 }

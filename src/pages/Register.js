@@ -6,7 +6,7 @@ class Register extends Component {
         return (
             <Container>
                 <Row>
-                    <Col md={{size: 6, offset: 3}}>
+                    <Col md={{ size: 6, offset: 3 }}>
                         <Form>
                             <FormGroup>
                                 <Label for="exampleEmail">Email</Label>
