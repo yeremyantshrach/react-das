@@ -1,10 +1,31 @@
 import React, { Component } from 'react';
-import { Container, Col, Row, Form, FormGroup, Input, Label, Button } from 'reactstrap';
+import {
+    Container,
+    Col,
+    Row,
+    Form,
+    FormGroup,
+    Input,
+    Label,
+    Button,
+    FormFeedback,
+} from 'reactstrap';
+
+import { required, isEmail } from '../helpers';
 
 class Login extends Component {
     state = {
-        email: '',
-        password: ''
+        email: {
+            value: '',
+            touched: false,
+            isValid: false,
+            message: 'Not Valid Email !'
+        },
+        password: {
+            value: '',
+            touched: false,
+            isValid: false
+        },
     }
     constructor(props) {
         super(props);
@@ -20,13 +41,35 @@ class Login extends Component {
 
     handleOnChange(e) {
         e.persist();
-        this.setState({
-            [e.target.name]: e.target.value
+        const { name, value } = e.target;
+        let isValid = true;
+        if (name === 'password') {
+            isValid = required(value);
+        } else if (name === 'email') {
+            isValid = (required(value) && isEmail(value))
+        }
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                [name]: {
+                    ...prevState[name],
+                    value,
+                    touched: true,
+                    isValid,
+                    message: 'Not Valid Email !'
+                }
+            }
         })
     }
-    
+
     handleOnSubmit(e) {
-        e.preventDefault()
+        e.preventDefault();
+        const { email, password } = this.state;
+        const { history } = this.props;
+        const users = JSON.parse(localStorage.getItem('users'));
+        const user = users.find(user => user.email === email.value && user.password === password.value);
+        localStorage.setItem('user', JSON.stringify(user));
+        history.replace('/');
     }
 
     render() {
@@ -41,11 +84,15 @@ class Login extends Component {
                                 <Input
                                     type="email"
                                     onChange={this.handleOnChange}
-                                    value={email}
+                                    value={email.value}
                                     name="email"
                                     id="exampleEmail"
+                                    invalid={email.touched && !email.isValid}
                                     placeholder="input your email"
                                 />
+                                <FormFeedback>
+                                    {email.message}
+                                </FormFeedback>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="examplePassword">Password</Label>
@@ -53,10 +100,14 @@ class Login extends Component {
                                     type="password"
                                     name="password"
                                     onChange={this.handleOnChange}
-                                    value={password}
+                                    value={password.value}
                                     id="examplePassword"
+                                    invalid={password.touched && !password.isValid}
                                     placeholder="input your password"
                                 />
+                                <FormFeedback>
+                                    Password is required !
+                                </FormFeedback>
                             </FormGroup>
                             <FormGroup>
                                 <Button color="primary" type="submit">

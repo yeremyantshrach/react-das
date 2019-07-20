@@ -16,6 +16,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 
 import withMobileSize from './withMobileSize';
+import PrivateRoute from './PrivateRoute';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -35,7 +36,7 @@ class App extends React.Component {
   }
 
   render() {
-    return localStorage.getItem('user') ? (
+    return (
       <Router>
         {
           this.props.width >= 992 && (
@@ -44,9 +45,12 @@ class App extends React.Component {
               isVisible={this.state.isVisible}
             >
               <Switch>
-                <Route exact component={Home} path="/" />
-                <Route component={About} path="/about" />
-                <Route component={Contact} path="/contact" />
+                <Route component={Login} path="/login" />
+                <Route component={Register} path="/register" />
+
+                <PrivateRoute exact component={Home} path="/" />
+                <PrivateRoute component={About} path="/about" />
+                <PrivateRoute component={Contact} path="/contact" />
                 <Redirect from="*" to="/" />
               </Switch>
             </Web>
@@ -60,20 +64,7 @@ class App extends React.Component {
           )
         }
       </Router>
-    ) : (
-        <Router>
-          <Web
-            handleOnToggle={this.handleOnToggle}
-            isVisible={this.state.isVisible}
-          >
-            <Switch>
-              <Route exact component={Login} path="/login" />
-              <Route component={Register} path="/register" />
-              <Redirect from="*" to="/login" />
-            </Switch>
-          </Web>
-        </Router>
-      )
+    )
   }
 }
 
