@@ -68,8 +68,26 @@ class Login extends Component {
         const { history } = this.props;
         const users = JSON.parse(localStorage.getItem('users'));
         const user = users.find(user => user.email === email.value && user.password === password.value);
-        localStorage.setItem('user', JSON.stringify(user));
-        history.replace('/');
+        if(user) {
+            localStorage.setItem('user', JSON.stringify(user));
+            history.replace('/');
+        } else {
+            this.setState(prevState => {
+                return {
+                    ...prevState,
+                    email: {
+                        ...prevState.email,
+                        isValid: false,
+                        message: "Invalid Email or password"
+                    },
+                    password: {
+                        value: '',
+                        touched: false,
+                        isValid: false
+                    }
+                }
+            })
+        }
     }
 
     render() {
