@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Table } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import { Table, Button } from 'reactstrap';
+
 class Home extends Component {
     state = {
         users: []
@@ -24,17 +26,23 @@ class Home extends Component {
                             <th>User Name</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            this.state.users.map((user, index) => (
+                            this.state.users.map(user => (
                                 <tr key={user.id}>
                                     <td>{user.id}</td>
                                     <td>{user.name}</td>
                                     <td>{user.username}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
+                                    <td>
+                                        <NavLink to={`/user/${user.id}`}>
+                                            Load Cureent
+                                        </NavLink>
+                                    </td>
                                 </tr>
                             ))
                         }
