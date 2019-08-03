@@ -12,6 +12,7 @@ import About from './pages/About';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
 import User from './pages/User';
+import Post from './pages/Post';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -51,6 +52,7 @@ class App extends React.Component {
 
                 <PrivateRoute exact component={Home} path="/" />
                 <PrivateRoute component={User} path="/user/:id" />
+                <PrivateRoute component={Post} path="/post/:id" />
                 <PrivateRoute component={About} path="/about" />
                 <PrivateRoute component={Contact} path="/contact" />
                 <Redirect from="*" to="/" />
