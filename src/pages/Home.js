@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { Table } from 'reactstrap';
 import { connect } from 'react-redux';
 
+import * as homeActions from '../store/home/actions';
+
 class Home extends Component {
     state = {
         users: []
@@ -19,7 +21,7 @@ class Home extends Component {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
             .then((users) => {
-                this.setState({ users })
+                this.props.onSetUsers(users);
             })
     }
 
@@ -38,10 +40,9 @@ class Home extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <>
-                {/* <Table responsive>
+                <Table responsive>
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -54,7 +55,7 @@ class Home extends Component {
                     </thead>
                     <tbody>
                         {
-                            this.state.users.map(user => (
+                            this.props.users.map(user => (
                                 <tr key={user.id}>
                                     <td>{user.id}</td>
                                     <td>{user.name}</td>
@@ -70,19 +71,7 @@ class Home extends Component {
                             ))
                         }
                     </tbody>
-                </Table> */}
-                {this.props.counter}
-                <br />
-                {this.props.word}
-                <button onClick={this.handleOnIncrement}>
-                    Increment
-                </button>
-                <button onClick={this.handleOnDecrement}>
-                    decrement
-                </button>
-                <button onClick={this.handleOnChangeWord}>
-                    Change Word
-                </button>
+                </Table>
             </>
         )
     }
@@ -90,16 +79,13 @@ class Home extends Component {
 
 function stateToProps(state) {
     return {
-        counter: state.counter,
-        word: state.word
+        users: state.home.users
     }
 }
 
 function dispatchToProps(dispatch) {
     return {
-        onIncrement: () => dispatch({ type: 'INCREMENT', payload: 1 }),
-        onDecrement: () => dispatch({ type: 'DECREMENT', payload: -1 }),
-        onChangeWord: (word) => dispatch({ type: 'CHANGE_WORD', payload: word })
+        onSetUsers: (users) => dispatch(homeActions.setUsers(users)),
     }
 }
 
