@@ -1,7 +1,8 @@
 import { types } from './actions';
 
 const initialState = {
-    users: []
+    users: [],
+    user: {},
 }
 
 export default (state = initialState, action = {}) => {
@@ -10,6 +11,11 @@ export default (state = initialState, action = {}) => {
             return {
                 ...state,
                 users: [...action.payload.users],
+            };
+        case types.SET_FETCHED_USER:
+            return {
+                ...state,
+                user: {...action.payload.user},
             };
         default:
             return state;

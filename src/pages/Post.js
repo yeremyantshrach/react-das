@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import * as aboutActions from '../store/about/actions';
 
 class Post extends Component {
-    state = {
-        post: {
-
-        }
-    }
-
     componentDidMount() {
         fetch(`https://jsonplaceholder.typicode.com/posts/${this.props.match.params.id}`)
             .then(response => response.json())
             .then(post => {
-                this.setState({ post })
+                this.props.onSetPost(post)
             })
     }
 
@@ -21,13 +18,13 @@ class Post extends Component {
         return (
             <Row>
                 <Col md="4">
-                    {this.state.post.title}
+                    {this.props.post.title}
                 </Col>
                 <Col md="4">
-                    {this.state.post.body}
+                    {this.props.post.body}
                 </Col>
                 <Col md="4">
-                    <NavLink to={`/user/${this.state.post.userId}`}>
+                    <NavLink to={`/user/${this.props.post.userId}`}>
                         Load owner
                     </NavLink>
                 </Col>
@@ -36,4 +33,16 @@ class Post extends Component {
     }
 }
 
-export default Post;
+function stateToProps(state) {
+    return {
+        post: state.about.post
+    }
+}
+
+function dispatchToProps(dispatch) {
+    return {
+        onSetPost: (post) => dispatch(aboutActions.setPost(post))
+    }
+}
+
+export default connect(stateToProps, dispatchToProps)(Post);
