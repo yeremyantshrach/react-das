@@ -18,11 +18,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then((users) => {
-                this.props.onSetUsers(users);
-            })
+        this.props.onFetchUsers()
     }
 
     handleOnIncrement(e) {
@@ -85,7 +81,7 @@ function stateToProps(state) {
 
 function dispatchToProps(dispatch) {
     return {
-        onSetUsers: (users) => dispatch(homeActions.setUsers(users)),
+        onFetchUsers: () => dispatch(homeActions.fetchUsers()),
     }
 }
 
