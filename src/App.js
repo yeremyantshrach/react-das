@@ -54,7 +54,7 @@ class App extends React.Component {
                 <PrivateRoute component={User} path="/user/:id" />
                 <PrivateRoute component={Post} path="/post/:id" />
                 <PrivateRoute component={About} path="/about" />
-                <PrivateRoute component={Contact} path="/contact" />
+                <PrivateRoute component={Contact} path="/contact/:postId" />
                 <Redirect from="*" to="/" />
               </Switch>
             </Web>

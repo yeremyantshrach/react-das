@@ -17,15 +17,20 @@ class Post extends Component {
     render() {
         return (
             <Row>
-                <Col md="4">
+                <Col md="3">
                     {this.props.post.title}
                 </Col>
-                <Col md="4">
+                <Col md="3">
                     {this.props.post.body}
                 </Col>
-                <Col md="4">
+                <Col md="3">
                     <NavLink to={`/user/${this.props.post.userId}`}>
                         Load owner
+                    </NavLink>
+                </Col>
+                <Col md="3">
+                    <NavLink to={`/contact/${this.props.post.id}`}>
+                        Load comments
                     </NavLink>
                 </Col>
             </Row>

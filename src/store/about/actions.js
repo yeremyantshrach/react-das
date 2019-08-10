@@ -1,6 +1,7 @@
 export const types = {
     SET_FETCHED_POSTS: 'SET_FETCHED_POSTS',
-    SET_FETCHED_POST: 'SET_FETCHED_POST'
+    SET_FETCHED_POST: 'SET_FETCHED_POST',
+    SET_FETCHED_COMMENTS: 'SET_FETCHED_COMMENTS'
 };
 
 export const setPosts = (posts) => {
@@ -20,3 +21,10 @@ export const setPost = (post) => {
         }
     }
 }
+
+export const setComments = comments => ({
+    type: types.SET_FETCHED_COMMENTS,
+    payload: {
+        comments
+    }
+})
