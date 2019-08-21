@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { Table } from 'reactstrap';
 import { connect } from 'react-redux';
 
+import Loader from '../components/Loader';
+
 import * as homeActions from '../store/home/actions';
 
 class Home extends Component {
@@ -18,11 +20,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then((users) => {
-                this.props.onSetUsers(users);
-            })
+        this.props.onFetchUsers()
     }
 
     handleOnIncrement(e) {
@@ -40,6 +38,9 @@ class Home extends Component {
     }
 
     render() {
+        if(this.props.isLoading) {
+            return <Loader />
+        }
         return (
             <>
                 <Table responsive>
@@ -79,13 +80,14 @@ class Home extends Component {
 
 function stateToProps(state) {
     return {
-        users: state.home.users
+        users: state.home.users,
+        isLoading: state.ui.loading
     }
 }
 
 function dispatchToProps(dispatch) {
     return {
-        onSetUsers: (users) => dispatch(homeActions.setUsers(users)),
+        onFetchUsers: () => dispatch(homeActions.fetchUsers()),
     }
 }
 
