@@ -10,11 +10,7 @@ class About extends Component {
         posts: []
     }
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-        .then(response => response.json())
-        .then(posts => {
-            this.props.onSetPosts(posts);
-        })
+        this.props.onFetchPosts();
     }
     render() {
         console.log(this.props);
@@ -55,7 +51,7 @@ function stateToProps(state) {
 
 function dispatchToProps(dispatch) {
     return {
-        onSetPosts: (posts) => dispatch(aboutActions.setPosts(posts))
+        onFetchPosts: () => dispatch(aboutActions.fetchPosts())
     }
 }
 
